@@ -24,6 +24,7 @@ class UserAkses extends Model implements AuthenticatableContract
         'alamat',
         'no_hp',
         'tanggal_masuk',
+        'file_pdf',
     ];
 
     public $timestamps = true;

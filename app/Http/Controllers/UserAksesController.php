@@ -104,10 +104,44 @@ class UserAksesController extends Controller
         return redirect()->route('index')->with('success', 'Data karyawan berhasil diupdate');
     }
 
+    // Menampilkan form upload
     public function showUpload()
     {
         $auth = Auth::user();
-        return view('upload', compact('auth'));
+        // Get the list of uploaded files for the user
+        $uploadedFiles = Storage::files('uploads/' . $auth->id);
+        return view('upload', compact('auth', 'uploadedFiles'));
+    }
+
+    // Proses Upload
+    public function uploadFile(Request $request)
+    {
+        $request->validate([
+            'file_pdf' => 'required|file|mimes:pdf|max:20480', // max 20MB
+        ]);
+        
+        $auth = Auth::user();
+        $filePath = $request->file('file_pdf')->store('uploads/' . $auth->id);
+        
+        // Optionally, you can save the file path in the database
+        $auth->file_pdf = $filePath;
+        $auth->save();
+        
+        return redirect()->route('upload')->with('success', 'File berhasil diupload!');
+    }
+    
+    // Hapus file
+    public function delete($filename)
+    {
+        $auth = Auth::user();
+        $filePath = 'uploads/' . $auth->id . '/' . $filename;
+        
+        if (Storage::exists($filePath)) {
+            Storage::delete($filePath);
+            return redirect()->route('upload')->with('success', 'File berhasil dihapus!');
+        }
+        
+        return redirect()->route('upload')->with('failed', 'File tidak ditemukan!');
     }
 
     // Logout

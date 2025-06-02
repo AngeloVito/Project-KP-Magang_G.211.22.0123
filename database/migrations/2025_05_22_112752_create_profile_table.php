@@ -22,6 +22,7 @@ return new class extends Migration
             $table->text('alamat')->nullable();
             $table->string('no_hp', 12);
             $table->date('tanggal_masuk');
+            $table->string('file_pdf')->nullable();
             $table->timestamps();
         });
     }

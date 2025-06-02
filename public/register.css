@@ -68,11 +68,27 @@ h2 {
     transition: background-color 0.3s;
 }
 
-.error {
+.alert {
+    padding: 10px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.alert-danger {
+    text-align: center;
     background-color: #f8d7da;
     color: #f10909;
-    padding: 12px;
-    margin-bottom: 15px;
-    border-radius: 8px;
-    border: 1px solid #f5c6cb;
+}
+
+.alert-success {
+    text-align: center;
+    background-color: #d4edda;
+    color: #05680a;
+}
+
+.alert-failed {
+    text-align: center;
+    background-color: #f8d7da;
+    color: #f10909;
 }

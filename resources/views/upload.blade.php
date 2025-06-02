@@ -32,12 +32,29 @@
             @endif
             <h2>Upload Berkas (PDF maks. 20MB)</h2>
 
-            <div class="card card-danger">
-                <div class="card-header">
-                    <div class="card-title">Upload File</div>
+            <form action="{{ route('upload.post') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="form-group">
+                    <label for="file_pdf">Pilih file PDF:</label>
+                    <input type="file" name="file_pdf" accept="application/pdf" required>
                 </div>
-            </div>
+                <button type="submit">Upload</button>
+            </form>
 
+            <hr>
+
+            <h3>File yang telah diupload:</h3>
+            <ul>
+            @foreach ($uploadedFiles as $file)
+                <li>
+                    <a href="{{ Storage::url($file) }}" target="_blank">{{ basename($file) }}</a>
+                    <form action="{{ route('upload.delete', basename($file)) }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                    </form>
+                </li>
+            @endforeach
         </div>
     </body>
 </html>

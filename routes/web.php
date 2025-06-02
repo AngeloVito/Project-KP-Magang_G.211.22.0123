@@ -23,6 +23,8 @@ Route::middleware('auth')->group(function () {
     Route::put('edit', [UserAksesController::class, 'update'])->name('update');
     // Upload file user
     Route::get('upload', [UserAksesController::class, 'showUpload'])->name('upload');
+    Route::post('upload', [UserAksesController::class, 'uploadFile'])->name('upload.post');
+    Route::delete('upload/{filename}', [UserAksesController::class, 'delete'])->name('upload.delete');
     // Proses logout
     Route::post('logout', [UserAksesController::class, 'logout'])->name('logout');
 });
